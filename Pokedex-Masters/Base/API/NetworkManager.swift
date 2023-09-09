@@ -49,6 +49,7 @@ extension NetworkManager {
         case invalidURL
         case invalidStatusCode(statusCode: Int)
         case failedToDecode(error: Error)
+        case custom(error: Error)
     }
 }
 
@@ -57,6 +58,8 @@ extension NetworkManager.NetworkError: Equatable {
         switch(lhs, rhs) {
             case (.invalidURL, .invalidURL):
                 return true
+            case (.custom(let lhsType), .custom(let rhsType)):
+                return lhsType.localizedDescription == rhsType.localizedDescription
             case(.failedToDecode(let lhsType), .failedToDecode(let rhsType)):
                 return lhsType.localizedDescription == rhsType.localizedDescription
             case(.invalidStatusCode(let lhsType), .invalidStatusCode(let rhsType)):
@@ -76,6 +79,8 @@ extension NetworkManager.NetworkError {
                 return "Status code falls into the wrong range"
             case .failedToDecode:
                 return "Failed to decode"
+            case .custom(let err):
+                return "Something went wrong \(err.localizedDescription)"
         }
     }
 }

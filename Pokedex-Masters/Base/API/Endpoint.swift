@@ -14,10 +14,10 @@ enum Endpoint {
 
 extension Endpoint {
     var host: String { "pokeapi.co" }
-    var basePath: String { "api/v2" }
+    var basePath: String { "/api/v2" }
     
     var path: String {
-        switch self  {
+        switch self {
             case .allPokemon:
                 return "\(basePath)/pokemon"
             case .pokemonDetails(let name):
